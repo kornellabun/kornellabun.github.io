@@ -6,30 +6,30 @@ library(dplyr)
 library(ggplot2)
 library(gganimate)
 
-setwd("~/Projects/experiments/jokinghero.github.io/")
+setwd("/home/ai/Projects/nubalion/kornellabun.github.io/")
 
-me <- data.frame(Group = 0:28,
+me <- data.frame(Group = 0:34,
                  Strength = c(seq(0, 10, length.out = 15),
-                              seq(10, 25, length.out = 9), 
-                              seq(25, 18, length.out = 5)) / 25, # max 25
+                              seq(10, 25, length.out = 10), 
+                              seq(25, 18, length.out = 10)) / 25, # max 25
                  Dexterity = c(seq(0, 10, length.out = 5),
                                rep(10, 10),
-                               seq(10, 15, length.out = 10),
-                               rep(15, 4)) / 25,
+                               seq(10, 15, length.out = 11),
+                               rep(15, 4), seq(15, 20, length.out = 5)) / 25,
                  Charisma = c(seq(0, 25, length.out = 10),
-                              seq(25, 15, length.out = 10), 
-                              seq(15, 20, length.out = 9)) / 25,
+                              seq(25, 15, length.out = 11), 
+                              seq(15, 20, length.out = 14)) / 25,
                  Inteligence = c(seq(0, 17, length.out = 20),
-                                 seq(17, 20, length.out = 9)) / 25,
+                                 seq(17, 20, length.out = 15)) / 25,
                  Wisdom = c(seq(0, 10, length.out = 7),
-                            rep(10, 7),
+                            rep(10, 13),
                             seq(10, 15, length.out = 5),
                             seq(15, 25, length.out = 10)) / 25,
                  Constitution = c(rep(0, 5),
                                   seq(0, 7, length.out = 7),
-                                  seq(7, 10, length.out = 4), 
+                                  seq(7, 10, length.out = 5), 
                                   seq(10, 25, length.out = 8), 
-                                  seq(25, 17, length.out = 5)) / 25)
+                                  seq(25, 17, length.out = 10)) / 25)
 mtcars <- me
 
 ### 0.1b Create quantile data from the example dataset to create the grid (recommended)
