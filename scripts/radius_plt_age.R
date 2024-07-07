@@ -221,7 +221,7 @@ gg <- base_grid +
         legend.title = element_blank())
 gg
 
-age <- 28
+age <- 34
 gg <- base_grid + 
   geom_polygon(data = xy_lines, #[xy_lines$group == age, ], 
                aes(x = x, y = y, group = group),
@@ -239,8 +239,8 @@ gg <- base_grid +
 
 anim_save("images/growth.gif", animation = 
             animate(gg, 
-                    nframes = 100, fps = 10, 
-                    detail = 10, 
+                    nframes = 200, fps = 20, 
+                    detail = 20, 
                     renderer = gifski_renderer(), device = "png"))
 
 #ggsave("~/hxh.png", gg, width = 10, height = 10, dpi = 400)
