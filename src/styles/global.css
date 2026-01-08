@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+/* 1. Register Nasalization */
+@font-face {
+  font-family: 'Nasalization';
+  src: url('/fonts/nasalization-rg-webfont.woff2') format('woff2'),
+       url('/fonts/nasalization-rg-webfont.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 2. Register Google Sans Flex */
+@font-face {
+  font-family: 'Google Sans Flex';
+  src: url('/fonts/GoogleSansFlex-VF.ttf') format('truetype');
+  font-weight: 100 1000; 
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 3. Configure Theme */
+@theme {
+  --font-sans: 'Google Sans Flex', ui-sans-serif, system-ui, sans-serif;
+  --font-nasalization: 'Nasalization', sans-serif;
+  
+  /* Define custom spacing if needed, though v4 has excellent defaults */
+}
+
+/* 4. Base Setup */
+@layer base {
+  html {
+    /* Prevent the browser from handling scroll on the root, 
+       so we can control it in the body */
+    overflow: hidden; 
+  }
+  
+  body {
+    font-family: var(--font-sans);
+    @apply antialiased text-gray-900 bg-white;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-nasalization);
+  }
+}

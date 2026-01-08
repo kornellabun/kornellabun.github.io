@@ -1,0 +1,178 @@
+---
+import '../styles/global.css';
+import { Icon } from 'astro-icon/components';
+
+const projects = [
+  { title: "CHOPOFF", category: "Bioinformatics", color: "bg-stone-100", icon: "mdi:dna" },
+  { title: "Hunter x Hunter", category: "Game Design", color: "bg-blue-100", icon: "mdi:dice-d20" },
+  { title: "AmpliCan", category: "R Package", color: "bg-teal-100", icon: "mdi:chart-scatter-plot" },
+  { title: "League of Draft", category: "Web App", color: "bg-indigo-100", icon: "mdi:controller" },
+  { title: "ORFik", category: "R Package", color: "bg-orange-100", icon: "mdi:microscope" },
+  { title: "R Crash Course", category: "Education", color: "bg-yellow-100", icon: "mdi:school" },
+  { title: "Genetics Pro", category: "Genetics", color: "bg-red-100", icon: "mdi:test-tube" },
+  { title: "Algorithms", category: "Code", color: "bg-green-100", icon: "mdi:code-braces" },
+];
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Kornel Labun</title>
+	</head>
+	
+    <!-- 
+        1. overflow-y-scroll snap-y snap-mandatory: The Scroll Container
+        2. scroll-pt-0: Ensures snap points align with the very top
+    -->
+	<body class="bg-white h-dvh w-full overflow-y-scroll snap-y snap-mandatory scroll-smooth relative">
+
+		<!-- MENU & NAV (Unchanged) -->
+        <button id="menu-toggle" class="fixed top-6 right-6 z-50 p-3 bg-black text-white rounded-full shadow-xl hover:scale-110 transition-transform cursor-pointer mix-blend-difference">
+            <Icon name="mdi:menu" class="size-6" />
+        </button>
+
+        <div id="nav-overlay" class="fixed inset-0 bg-white/95 backdrop-blur-xl z-40 translate-x-full transition-transform duration-500 ease-in-out flex flex-col justify-center items-center">
+            <nav class="flex flex-col gap-6 text-center">
+                <a href="#top" class="nav-item text-4xl font-nasalization hover:text-blue-600 transition-colors">Start</a>
+                <div class="h-px w-20 bg-gray-300 mx-auto my-2"></div>
+                {projects.map((p, i) => (
+                    <a href={`#project-${i}`} class="nav-item text-xl font-sans text-gray-500 hover:text-black transition-colors">
+                        {p.title}
+                    </a>
+                ))}
+                <div class="h-px w-20 bg-gray-300 mx-auto my-2"></div>
+                <a href="#contact" class="nav-item text-4xl font-nasalization hover:text-blue-600 transition-colors">Contact</a>
+            </nav>
+        </div>
+
+		<!-- INTRO SECTION -->
+        <!-- We use 'relative' to contain the snap anchor -->
+		<section id="top" class="relative h-dvh bg-white">
+            <!-- GHOST ANCHOR: The invisible element we actually snap to -->
+            <div class="absolute top-0 w-full h-full snap-start pointer-events-none"></div>
+            
+            <!-- Content -->
+            <div class="h-full flex flex-col items-center justify-center px-6">
+                <h1 class="font-nasalization text-5xl md:text-8xl text-center mb-6">
+                    Kornel Labun
+                </h1>
+                <p class="font-sans text-xl text-gray-600 text-center">
+                    Bioinformatics & Software Architecture
+                </p>
+                <div class="absolute bottom-10 animate-bounce text-gray-400 flex flex-col items-center gap-2">
+                     <span class="text-xs uppercase tracking-widest font-bold">Scroll</span>
+                     <Icon name="mdi:chevron-down" class="size-6" />
+                </div>
+            </div>
+		</section>
+
+		<!-- PROJECTS STACK -->
+        {projects.map((project, index) => (
+            /* 
+               WRAPPER: 
+               This div is NOT sticky. It flows normally. 
+               It is purely a container for our logic.
+            */
+            <div class="relative w-full">
+                
+                <!-- 
+                   1. GHOST ANCHOR (The Fix): 
+                      This element is absolute positioned at the top of the wrapper.
+                      It is static relative to the scroll flow.
+                      The browser snaps to THIS, which is stable.
+                -->
+                <div id={`project-${index}`} class="absolute -top-1 w-full h-dvh snap-start pointer-events-none"></div>
+
+                <!-- 
+                   2. STICKY CARD:
+                      This creates the visual "stacking" effect.
+                      It ignores the snap logic (because snap is on the ghost above).
+                -->
+                <div 
+                    class={`
+                        sticky top-0 
+                        h-dvh w-full 
+                        flex flex-col 
+                        border-t border-black/5 
+                        shadow-[-10px_-10px_30px_rgba(0,0,0,0.05)] 
+                        overflow-hidden 
+                        bg-white
+                        ${project.color}
+                        /* v4 z-index to ensure correct stacking order if needed, 
+                           though DOM order usually handles it */
+                        z-[${index + 1}]
+                    `}
+                >
+                    <div class="container mx-auto px-6 h-full flex flex-col md:flex-row items-center justify-center gap-10">
+                        <div class="w-full md:w-1/2 space-y-6 flex flex-col justify-center">
+                            <div class="flex items-center gap-4">
+                                <span class="font-nasalization text-6xl opacity-20">0{index + 1}</span>
+                                <span class="uppercase tracking-widest text-sm font-bold opacity-50">{project.category}</span>
+                            </div>
+                            <h2 class="font-nasalization text-4xl md:text-7xl leading-tight">{project.title}</h2>
+                            <p class="font-sans text-lg md:text-xl opacity-80 max-w-md text-balance">
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                            <div>
+                                <button class="px-8 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition cursor-pointer">
+                                    View Details
+                                </button>
+                            </div>
+                        </div>
+                        <div class="hidden md:flex w-full md:w-1/2 justify-center">
+                            <Icon name={project.icon} class="size-48 opacity-10 md:opacity-20" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        ))}
+
+		<!-- CONTACT -->
+		<section class="relative w-full">
+             <div id="contact" class="absolute top-0 w-full h-dvh snap-start pointer-events-none"></div>
+             
+             <div class="sticky top-0 h-dvh flex flex-col items-center justify-center bg-gray-900 text-white z-50">
+                <h2 class="font-nasalization text-6xl mb-8">Contact</h2>
+                <p class="font-sans text-xl opacity-70 mb-8">kornel.labun@gmail.com</p>
+                <div class="flex gap-6">
+                    <Icon name="mdi:github" class="size-10 hover:text-blue-400 cursor-pointer transition-colors" />
+                    <Icon name="mdi:linkedin" class="size-10 hover:text-blue-400 cursor-pointer transition-colors" />
+                </div>
+             </div>
+		</section>
+
+	</body>
+</html>
+
+<script>
+    const menuBtn = document.getElementById('menu-toggle');
+    const navOverlay = document.getElementById('nav-overlay');
+    const navItems = document.querySelectorAll('.nav-item');
+    let isOpen = false;
+
+    menuBtn?.addEventListener('click', () => {
+        isOpen = !isOpen;
+        toggleMenu();
+    });
+
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
+            isOpen = false;
+            toggleMenu();
+        });
+    });
+
+    function toggleMenu() {
+        if (!navOverlay) return;
+        if(isOpen) {
+            navOverlay.classList.remove('translate-x-full');
+            document.body.style.overflow = 'hidden'; 
+        } else {
+            navOverlay.classList.add('translate-x-full');
+            document.body.style.overflow = ''; 
+        }
+    }
+</script>
