@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-/* 1. Register Nasalization */
 @font-face {
   font-family: 'Nasalization';
   src: url('/fonts/nasalization-rg-webfont.woff2') format('woff2'),
@@ -10,37 +9,82 @@
   font-display: swap;
 }
 
-/* 2. Register Google Sans Flex */
 @font-face {
   font-family: 'Google Sans Flex';
   src: url('/fonts/GoogleSansFlex-VF.ttf') format('truetype');
   font-weight: 100 1000; 
-  font-style: normal;
+  font-stretch: 50% 125%; 
+  font-style: oblique 0deg 20deg;
   font-display: swap;
 }
 
-/* 3. Configure Theme */
 @theme {
   --font-sans: 'Google Sans Flex', ui-sans-serif, system-ui, sans-serif;
   --font-nasalization: 'Nasalization', sans-serif;
-  
-  /* Define custom spacing if needed, though v4 has excellent defaults */
 }
 
-/* 4. Base Setup */
 @layer base {
-  html {
-    /* Prevent the browser from handling scroll on the root, 
-       so we can control it in the body */
-    overflow: hidden; 
-  }
-  
+  html { overflow: hidden; }
   body {
     font-family: var(--font-sans);
     @apply antialiased text-gray-900 bg-white;
   }
+}
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-nasalization);
+@layer utilities {
+  /* 
+     SKILLS TYPOGRAPHY 
+  */
+  
+  /* Bold/Highlighted Text (Inside *asterisks*) */
+  .skill-main {
+    /* Thicker weight (700) and full opacity */
+    font-variation-settings: 'wght' 700, 'wdth' 100;
+    @apply text-gray-900 transition-all duration-300;
+  }
+
+  /* Detail Text (Normal text) */
+  .skill-detail {
+    /* Lighter weight (350) and softer color */
+    font-variation-settings: 'wght' 350, 'wdth' 100;
+    @apply text-gray-500 transition-all duration-300;
+  }
+
+  /* ANIMATIONS */
+  .stagger-enter {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  
+  .in-view .stagger-enter {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* PASTILLE THEME UTILITIES */
+  .badge-yellow {
+    @apply bg-yellow-50 text-yellow-900 border border-yellow-100;
+  }
+  .badge-red {
+    @apply bg-rose-50 text-rose-900 border border-rose-100;
+  }
+  .badge-gray {
+    @apply bg-gray-50 text-gray-900 border border-gray-100;
+  }
+
+  /* Animation that runs immediately (for the Intro section) */
+  .hero-animate {
+    animation: hero-fade-up 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .hero-animate-delay-1 { animation-delay: 0.1s; }
+  .hero-animate-delay-2 { animation-delay: 0.2s; }
+  .hero-animate-delay-3 { animation-delay: 0.3s; }
+
+  @keyframes hero-fade-up {
+    to { opacity: 1; transform: translateY(0); }
   }
 }

@@ -2,15 +2,167 @@
 import '../styles/global.css';
 import { Icon } from 'astro-icon/components';
 
+const socialLinks = [
+    { label: "GitHub", href: "https://github.com/JokingHero", icon: "mdi:github", color: "hover:text-gray-900" },
+    { label: "LinkedIn", href: "https://linkedin.com/in/kornel-labun-7aa298317", icon: "mdi:linkedin", color: "hover:text-rose-700" },
+    { label: "Scholar", href: "https://scholar.google.no/citations?user=wsiLNg0AAAAJ", icon: "mdi:school", color: "hover:text-rose-500" },
+    { label: "Email", href: "mailto:kornellabun@gmail.com", icon: "mdi:email-outline", color: "hover:text-red-500" },
+];
+
+// DATA: SKILLS (Updated with *asterisks* for manual bolding)
+const skillCards = [
+  {
+    id: "bioinfo",
+    title: "Skills",
+    subtitle: "Computational Biology",
+    color: "bg-stone-50",
+    icon: "mdi:dna",
+    items: [
+      { key: "Omics Analysis", value: "*RNA-Seq*, *Ribo-Seq* (Translatomics), *Single-Cell* & Spatial Transcriptomics concepts, *Genomics*, Proteomics concepts." },
+      { key: "Sequencing Technologies", value: "*Illumina* (NGS), *Oxford Nanopore* & *PacBio* (Long-Read)." },
+      { key: "Functional Genomics", value: "Genome Engineering (*CRISPR Design* & Off-Target Analysis), *Gene Regulation*, RNA Biology (Translation, Modifications, Splicing), *Variant Analysis*." },
+      { key: "Specializations", value: "Therapeutic Target Identification, *Biomarker Discovery*, Precision Medicine, Computational Drug Discovery." }
+    ]
+  },
+  {
+    id: "software",
+    title: "Skills",
+    subtitle: "Software & AI",
+    color: "bg-blue-50",
+    icon: "mdi:code-braces",
+    items: [
+      { key: "Programming", value: "*R* (Bioconductor, tidyverse, Shiny), *Python* (Pandas, SciPy, scikit-learn, Keras, TensorFlow/PyTorch), *Julia*, *Javascript* (Node.js, React, Angular), *Bash*." },
+      { key: "AI / Machine Learning", value: "*Predictive Modeling*, *Deep Learning*, Model Development & Validation for biological applications." },
+      { key: "Data Visualization", value: "Interactive Dashboards & Graphics (*D3.js*, *ggplot2*, *Plotly*, Shiny), UI/UX principles." },
+      { key: "Tool Development", value: "Creator of widely used bioinformatics tools (*ORFik*, *ampliCan*, *RareVariantVis*, *CHOPCHOP*, *tailfindR*, *riboCrypt*, *CHOPOFF*)." }
+    ]
+  },
+  {
+    id: "data",
+    title: "Skills",
+    subtitle: "Data & DevOps",
+    color: "bg-indigo-50",
+    icon: "mdi:server-network",
+    items: [
+      { key: "Databases", value: "*SQL* (PostgreSQL, MySQL), *NoSQL* (MongoDB, Redis, Neo4j)." },
+      { key: "Infrastructure", value: "High-Performance Computing (*HPC*), Cloud Platforms (*Azure*, *GCP*), *Docker*, *Kubernetes*." },
+      { key: "Best Practices", value: "End-to-end pipeline development, *CI/CD*, version control (*Git*), reproducible research." },
+      { key: "Languages", value: "*Polish* (native), *English* (fluent), *Norwegian* (basic)" }
+    ]
+  }
+];
+
 const projects = [
-  { title: "CHOPOFF", category: "Bioinformatics", color: "bg-stone-100", icon: "mdi:dna" },
-  { title: "Hunter x Hunter", category: "Game Design", color: "bg-blue-100", icon: "mdi:dice-d20" },
-  { title: "AmpliCan", category: "R Package", color: "bg-teal-100", icon: "mdi:chart-scatter-plot" },
-  { title: "League of Draft", category: "Web App", color: "bg-indigo-100", icon: "mdi:controller" },
-  { title: "ORFik", category: "R Package", color: "bg-orange-100", icon: "mdi:microscope" },
-  { title: "R Crash Course", category: "Education", color: "bg-yellow-100", icon: "mdi:school" },
-  { title: "Genetics Pro", category: "Genetics", color: "bg-red-100", icon: "mdi:test-tube" },
-  { title: "Algorithms", category: "Code", color: "bg-green-100", icon: "mdi:code-braces" },
+  { 
+    title: "crisprtools.org", 
+    category: "Web Platform", 
+    description: "An integrated community platform for genome engineering designed to foster scientific collaboration and share resources.",
+    color: "bg-blue-50", 
+    icon: "mdi:dna", 
+    tech: ["Angular", "Nest.js", "PostgreSQL", "R", "Python", "ML", "Community"],
+    link: "https://crisprtools.org",
+    image: "/images/portfolio/crisprtools.png"
+  },
+  { 
+    title: "ampliCan", 
+    category: "R Package", 
+    description: "Automated analysis of CRISPR experiments using NGS data. Produces comprehensive HTML reports.",
+    color: "bg-teal-50", 
+    icon: "mdi:file-chart", 
+    tech: ["R", "Reports", "NGS", "CRISPR", "Analysis", "Bioconductor"],
+    link: "https://bioconductor.org/packages/release/bioc/html/amplican.html",
+    image: "/images/portfolio/amplican_conceptual_map.webp" 
+  },
+  { 
+    title: "SNIPSNP", 
+    category: "Web Tool / R package", 
+    description: "Design HDR templates to fix genetic variants or create disease models.",
+    color: "bg-indigo-50", 
+    icon: "mdi:scissors-cutting", 
+    tech: ["CRISPR", "Design", "R", "Machine Learning", "Genome Engineering"],
+    link: "https://crisprtools.org/snipsnp",
+    image: "/images/portfolio/snipsnp.png"
+  },
+  { 
+    title: "ORFik", 
+    category: "R Package", 
+    description: "A comprehensive R toolkit for the analysis of translation (Ribo-Seq, RNA-Seq). Optimized for extreme speed.",
+    color: "bg-orange-50", 
+    icon: "mdi:chart-bar", 
+    tech: ["NGS", "Translation", "Analysis", "R", "C++", "Bioconductor"],
+    link: "https://bioconductor.org/packages/release/bioc/html/ORFik.html",
+    image: "/images/portfolio/orfik.webp"
+  },
+  { 
+    title: "Dual-Cas13a", 
+    category: "Webtool", 
+    description: "Design spacers and primers for sensitive detection of Single-Nucleotide Variant on RNA with our Dual Cas13a strategy.",
+    color: "bg-purple-50", 
+    icon: "mdi:microscope", 
+    tech: ["RNA", "CRISPR", "R", "PRIMER design"],
+    link: "https://crisprtools.org/dual-cas13a",
+    image: "/images/portfolio/dual_cas13a.png" 
+  },
+  { 
+    title: "Code Blast Radius", 
+    category: "Software", 
+    description: "LLM context managment for large codebases.",
+    color: "bg-gray-100", 
+    icon: "mdi:radius-outline", 
+    tech: ["Rust", "LLM", "Static Code Analysis"],
+    link: "#",
+    image: null
+  },
+  { 
+    title: "CHOPOFF", 
+    category: "Webtool / Julia Package", 
+    description: "A CRISPR off-target detection tool achieving 10x speed improvement and 100% sensitivity.",
+    color: "bg-stone-100", 
+    icon: "mdi:flash", 
+    tech: ["Julia", "Algorithms", "Aligner", "HPC"],
+    link: "https://github.com/JokingHero/CHOPOFF.jl",
+    image: "/images/portfolio/chopoff.png"
+  },
+  { 
+    title: "CHOPCHOP", 
+    category: "Web Tool", 
+    description: "One of the most widely used web tools for CRISPR genome engineering. Cited over 2500 times.",
+    color: "bg-rose-50", 
+    icon: "mdi:web", 
+    tech: ["Python", "Web", "Genomics"],
+    link: "https://chopchop.cbu.uib.no/",
+    image: "/images/portfolio/chopchop.png"
+  },
+  { 
+    title: "League of Draft", 
+    category: "Web App", 
+    description: "Algorithmic team composition builder for League of Legends to maximize win probability.",
+    color: "bg-cyan-50", 
+    icon: "mdi:controller", 
+    tech: ["Node.js", "Angular", "Game Theory"],
+    link: "https://github.com/JokingHero/LeagueOfDraft",
+    image: "/images/portfolio/leagueofdraft.webp"
+  },
+  { 
+    title: "HxH RPG", 
+    category: "Game Design", 
+    description: "A comprehensive tabletop RPG rulebook extending the Fate Core system for the Hunter x Hunter universe.",
+    color: "bg-amber-50", 
+    icon: "mdi:dice-d20", 
+    tech: ["Game Design", "Writing"],
+    link: "https://docs.google.com/document/d/1X_VY0rb-0OXtYjLkx7LSjC9ZW23KBMIbB87rt_WJOYc/edit?usp=sharing",
+    image: "/images/portfolio/hxh.jpg"
+  },
+  { 
+    title: "R Crash Course", 
+    category: "Education", 
+    description: "Website and curriculum for teaching R programming to biologists and beginners.",
+    color: "bg-lime-50", 
+    icon: "mdi:school", 
+    tech: ["R", "Teaching", "Jekyll", "tidyverse"],
+    link: "https://r-crash-course.github.io/",
+    image: "/images/portfolio/R_crash_course.png" 
+  }
 ];
 ---
 
@@ -23,124 +175,351 @@ const projects = [
 		<title>Kornel Labun</title>
 	</head>
 	
-    <!-- 
-        1. overflow-y-scroll snap-y snap-mandatory: The Scroll Container
-        2. scroll-pt-0: Ensures snap points align with the very top
-    -->
 	<body class="bg-white h-dvh w-full overflow-y-scroll snap-y snap-mandatory scroll-smooth relative">
 
-		<!-- MENU & NAV (Unchanged) -->
+		<!-- MENU BUTTON -->
         <button id="menu-toggle" class="fixed top-6 right-6 z-50 p-3 bg-black text-white rounded-full shadow-xl hover:scale-110 transition-transform cursor-pointer mix-blend-difference">
             <Icon name="mdi:menu" class="size-6" />
         </button>
 
-        <div id="nav-overlay" class="fixed inset-0 bg-white/95 backdrop-blur-xl z-40 translate-x-full transition-transform duration-500 ease-in-out flex flex-col justify-center items-center">
-            <nav class="flex flex-col gap-6 text-center">
-                <a href="#top" class="nav-item text-4xl font-nasalization hover:text-blue-600 transition-colors">Start</a>
-                <div class="h-px w-20 bg-gray-300 mx-auto my-2"></div>
-                {projects.map((p, i) => (
-                    <a href={`#project-${i}`} class="nav-item text-xl font-sans text-gray-500 hover:text-black transition-colors">
-                        {p.title}
-                    </a>
-                ))}
-                <div class="h-px w-20 bg-gray-300 mx-auto my-2"></div>
-                <a href="#contact" class="nav-item text-4xl font-nasalization hover:text-blue-600 transition-colors">Contact</a>
+        <!-- 
+            1. overflow-y-auto: Enables scrolling inside the menu if content is too tall.
+            2. py-10: Adds padding so top/bottom aren't cut off.
+        -->
+        <div id="nav-overlay" class="fixed inset-0 bg-white/95 backdrop-blur-xl z-40 translate-x-full transition-transform duration-500 ease-in-out flex flex-col items-center overflow-y-auto">
+            <nav class="flex flex-col gap-8 text-center w-full max-w-md xl:max-w-xl py-24 px-6">
+                
+                <!-- Main Links -->
+                <a href="#top" class="nav-item text-5xl font-nasalization hover:text-red-600 transition-colors">Start</a>
+                
+                <!-- Skills Group -->
+                <div class="flex flex-col gap-3">
+                    <span class="text-xs uppercase tracking-[0.2em] text-gray-400 font-bold mb-2">Skills</span>
+                    {skillCards.map((card, i) => (
+                        <a href={`#skill-${i}`} class="nav-item text-xl font-sans text-gray-600 hover:text-black hover:font-bold transition-all">
+                            {card.subtitle}
+                        </a>
+                    ))}
+                </div>
+
+                <!-- Projects Group -->
+                <div class="flex flex-col gap-3">
+                    <span class="text-xs uppercase tracking-[0.2em] text-gray-400 font-bold mb-2">Projects</span>
+                    {projects.map((p, i) => (
+                        <a href={`#project-${i}`} class="nav-item text-lg font-sans text-gray-500 hover:text-black hover:font-bold transition-all">
+                            {p.title}
+                        </a>
+                    ))}
+                </div>
+                
+                <!-- Contact Link -->
+                <div class="pt-4 border-t border-gray-200">
+                    <a href="#contact" class="nav-item text-5xl font-nasalization hover:text-red-600 transition-colors">Contact</a>
+                </div>
+
             </nav>
         </div>
 
+		<!-- INTRO -->
 		<!-- INTRO SECTION -->
-        <!-- We use 'relative' to contain the snap anchor -->
-		<section id="top" class="relative h-dvh bg-white">
-            <!-- GHOST ANCHOR: The invisible element we actually snap to -->
-            <div class="absolute top-0 w-full h-full snap-start pointer-events-none"></div>
-            
-            <!-- Content -->
-            <div class="h-full flex flex-col items-center justify-center px-6">
-                <h1 class="font-nasalization text-5xl md:text-8xl text-center mb-6">
-                    Kornel Labun
-                </h1>
-                <p class="font-sans text-xl text-gray-600 text-center">
-                    Bioinformatics & Software Architecture
-                </p>
-                <div class="absolute bottom-10 animate-bounce text-gray-400 flex flex-col items-center gap-2">
-                     <span class="text-xs uppercase tracking-widest font-bold">Scroll</span>
-                     <Icon name="mdi:chevron-down" class="size-6" />
+		<section id="top" class="relative w-full h-dvh bg-white flex flex-col md:flex-row overflow-hidden snap-start">
+            <div class="absolute top-0 w-full h-full pointer-events-none"></div>
+
+            <!-- LEFT COLUMN: Content -->
+            <div class="w-full md:w-7/12 h-full flex flex-col justify-center px-6 md:pl-20 md:pr-12 relative z-10 order-2 md:order-1 pt-4 md:pt-0">
+                
+                <div class="space-y-6 md:space-y-8 text-center md:text-left">
+                    
+                    <!-- Header with Mobile Photo Inline -->
+                    <div class="hero-animate hero-animate-delay-1">
+                        <div class="flex flex-row items-center justify-center md:justify-start gap-4 md:gap-0">
+                            <h1 class="font-nasalization text-5xl md:text-7xl lg:text-8xl text-gray-900 leading-[0.9]">
+                                Kornel <br/> Labun
+                            </h1>
+                            
+                            <!-- Mobile Photo: Next to Name -->
+                            <div class="md:hidden block w-20 h-20 shrink-0 rounded-full overflow-hidden border-2 border-gray-100 shadow-sm ml-2">
+                                <img src="/images/photo_round.jpg" alt="Kornel Labun" class="w-full h-full object-cover" />
+                            </div>
+                        </div>
+
+                        <!-- LinkedIn Title -->
+                        <p class="mt-4 font-sans text-lg md:text-2xl text-gray-500 font-light tracking-wide text-balance">
+                            Bioinformatics <span class="text-rose-300 text-sm align-middle mx-1">|</span> Genome Engineering <span class="text-rose-300 text-sm align-middle mx-1">|</span> Data & Analytics
+                        </p>
+                    </div>
+
+                    <!-- Updated Stats / Badges -->
+                    <div class="flex flex-wrap justify-center md:justify-start gap-3 hero-animate hero-animate-delay-2">
+                        <!-- Simplified PhD -->
+                        <span class="badge-gray px-4 py-1.5 rounded-full text-sm font-bold tracking-wide">PhD</span>
+                        
+                        <!-- Citation Count -->
+                        <span class="badge-red px-4 py-1.5 rounded-full text-sm font-medium">3722+ Citations</span>
+                        
+                        <!-- Experience -->
+                        <span class="badge-yellow px-4 py-1.5 rounded-full text-sm font-medium">10+ Years Exp</span>
+                    </div>
+
+                    <!-- Professional Summary -->
+                    <p class="hero-animate hero-animate-delay-2 font-sans text-base md:text-lg text-gray-600 leading-relaxed max-w-xl mx-auto md:mx-0">
+                        Bridging the gap between complex genomics and scalable software. 
+                        Expert in <span class="font-semibold text-gray-900">multi-omics analysis</span>, 
+                        <span class="font-semibold text-gray-900">CRISPR engineering</span>, and building 
+                        <span class="font-semibold text-gray-900">high-performance open-source tools</span> 
+                        for translational medicine.
+                    </p>
+
+                    <!-- Actions -->
+                    <div class="hero-animate hero-animate-delay-3 flex flex-col sm:flex-row items-center gap-4 pt-2 justify-center md:justify-start">
+                        
+                        <!-- Resume Button -->
+                        <a href="/Kornel_Labun_Bioinformatics_CV.pdf" download class="group flex items-center gap-3 bg-gray-900 text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition-all hover:gap-4 shadow-lg shadow-gray-200 cursor-pointer">
+                            <span class="font-nasalization">Download Resume</span>
+                            <Icon name="mdi:download" class="size-5" />
+                        </a>
+
+                        <!-- Social Icons -->
+                        <div class="flex items-center gap-2">
+                            {socialLinks.map(link => (
+                                <a href={link.href} target="_blank" rel="noopener noreferrer" 
+                                   class={`p-3 rounded-full bg-gray-50 text-gray-500 transition-colors ${link.color}`}
+                                   aria-label={link.label}>
+                                    <Icon name={link.icon} class="size-6" />
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scroll Indicator -->
+                <div class="absolute bottom-8 left-1/2 md:left-20 -translate-x-1/2 md:translate-x-0 animate-bounce text-gray-300 hidden md:flex flex-col gap-1 hero-animate hero-animate-delay-3">
+                     <span class="text-[10px] uppercase tracking-[0.3em] font-bold writing-vertical">Scroll</span>
+                     <Icon name="mdi:arrow-down" class="size-4" />
                 </div>
             </div>
+
+            <!-- RIGHT COLUMN: Desktop Image -->
+            <div class="hidden md:block w-5/12 h-full relative order-2 bg-gray-50">
+                <img src="/images/photo.jpg" alt="Kornel Labun Portrait" class="absolute inset-0 w-full h-full object-cover object-center hero-animate grayscale-[20%] hover:grayscale-0 transition-all duration-700" />
+                <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-20"></div>
+            </div>
+
 		</section>
 
-		<!-- PROJECTS STACK -->
-        {projects.map((project, index) => (
-            /* 
-               WRAPPER: 
-               This div is NOT sticky. It flows normally. 
-               It is purely a container for our logic.
-            */
+        <!-- SKILL CARDS -->
+        {skillCards.map((card, index) => (
             <div class="relative w-full">
-                
-                <!-- 
-                   1. GHOST ANCHOR (The Fix): 
-                      This element is absolute positioned at the top of the wrapper.
-                      It is static relative to the scroll flow.
-                      The browser snaps to THIS, which is stable.
-                -->
-                <div id={`project-${index}`} class="absolute -top-1 w-full h-dvh snap-start pointer-events-none"></div>
+                <div id={`skill-${index}`} class="absolute -top-1 w-full h-dvh snap-start pointer-events-none"></div>
+                <div class={`sticky top-0 h-dvh w-full flex flex-col border-t border-black/5 overflow-hidden ${card.color} z-[10]`}>
+                    <div class="container mx-auto px-6 h-full flex flex-col justify-center max-w-5xl relative">
+                        
+                        <div class="absolute right-0 top-1/2 -translate-y-1/2 opacity-[0.03] pointer-events-none">
+                            <Icon name={card.icon} class="size-96" />
+                        </div>
 
-                <!-- 
-                   2. STICKY CARD:
-                      This creates the visual "stacking" effect.
-                      It ignores the snap logic (because snap is on the ghost above).
-                -->
-                <div 
-                    class={`
-                        sticky top-0 
-                        h-dvh w-full 
-                        flex flex-col 
-                        border-t border-black/5 
-                        shadow-[-10px_-10px_30px_rgba(0,0,0,0.05)] 
-                        overflow-hidden 
-                        bg-white
-                        ${project.color}
-                        /* v4 z-index to ensure correct stacking order if needed, 
-                           though DOM order usually handles it */
-                        z-[${index + 1}]
-                    `}
-                >
-                    <div class="container mx-auto px-6 h-full flex flex-col md:flex-row items-center justify-center gap-10">
-                        <div class="w-full md:w-1/2 space-y-6 flex flex-col justify-center">
-                            <div class="flex items-center gap-4">
-                                <span class="font-nasalization text-6xl opacity-20">0{index + 1}</span>
-                                <span class="uppercase tracking-widest text-sm font-bold opacity-50">{project.category}</span>
+                        <div class="mb-4 md:mb-14 z-10 stagger-enter" style="transition-delay: 100ms">
+                            <div class="flex items-center gap-4 mb-2">
+                                <span class="font-nasalization text-4xl md:text-6xl text-gray-900">{card.title}</span>
                             </div>
-                            <h2 class="font-nasalization text-4xl md:text-7xl leading-tight">{project.title}</h2>
-                            <p class="font-sans text-lg md:text-xl opacity-80 max-w-md text-balance">
-                                Lorem ipsum dolor sit amet.
-                            </p>
-                            <div>
-                                <button class="px-8 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition cursor-pointer">
-                                    View Details
-                                </button>
-                            </div>
+                            <p class="font-sans text-lg md:text-xl text-gray-500 uppercase tracking-widest">{card.subtitle}</p>
                         </div>
-                        <div class="hidden md:flex w-full md:w-1/2 justify-center">
-                            <Icon name={project.icon} class="size-48 opacity-10 md:opacity-20" />
+
+                        <div class="flex flex-col gap-3 md:gap-5 z-10">
+                            {card.items.map((item, idx) => (
+                                <div class="stagger-enter group" style={`transition-delay: ${200 + (idx * 100)}ms`}>
+                                    <h4 class="font-nasalization text-lg md:text-xl text-gray-400 mb-2 group-hover:text-rose-600 transition-colors">
+                                        {item.key}
+                                    </h4>
+                                    
+                                    <!-- MANUAL PARSER: Splits by * to toggle bold style -->
+                                    <p class="text-base md:text-xl leading-relaxed">
+                                        {item.value.split('*').map((part, i) => {
+                                            // Odd index = inside asterisks = BOLD
+                                            const isBold = i % 2 !== 0;
+                                            return (
+                                                <span class={isBold ? 'skill-main' : 'skill-detail'}>
+                                                    {part}
+                                                </span>
+                                            );
+                                        })}
+                                    </p>
+                                </div>
+                            ))}
                         </div>
+
                     </div>
                 </div>
             </div>
         ))}
 
-		<!-- CONTACT -->
+        <!-- PROJECT CARDS -->
+        {projects.map((project, index) => {
+            // Logic for alternating layout
+            const isOdd = index % 2 !== 0;
+            
+            return (
+                <div class="relative w-full">
+                    <!-- Anchor -->
+                    <div id={`project-${index}`} class="absolute -top-1 w-full h-dvh snap-start pointer-events-none"></div>
+                    
+                    <!-- Sticky Card -->
+                    <div class={`sticky top-0 h-dvh w-full flex flex-col border-t border-black/5 overflow-hidden ${project.color} z-[${index + 20}]`}>
+                        
+                        <!-- 
+                           FLEX CONTAINER
+                        -->
+                        <div class={`container mx-auto h-full flex flex-col md:flex-row ${isOdd ? 'md:flex-row-reverse' : ''}`}>
+                            
+                            <!-- CONTENT COLUMN -->
+                            <!-- Kept h-1/2 as requested -->
+                            <div class="w-full md:w-1/2 h-1/2 md:h-full px-6 md:px-12 flex flex-col justify-center relative z-10 order-2 md:order-1">
+                                
+                                <!-- Index & Category -->
+                                <!-- CHANGED: mb-3 -> mb-1 for mobile (md:mb-6 keeps desktop same) -->
+                                <div class="flex items-center gap-4 mb-1 md:mb-6">
+                                    <span class="font-nasalization text-5xl md:text-6xl opacity-10 font-bold">
+                                        {(index + 1).toString().padStart(2, '0')}
+                                    </span>
+                                    <span class="uppercase tracking-[0.2em] text-xs md:text-sm font-bold opacity-60 border-b border-black/20 pb-1">
+                                        {project.category}
+                                    </span>
+                                </div>
+                                
+                                <!-- Title -->
+                                <!-- CHANGED: mb-4 -> mb-2 for mobile -->
+                                <h2 class="font-nasalization text-3xl md:text-5xl lg:text-6xl leading-tight mb-2 md:mb-4 text-gray-900">
+                                    {project.title}
+                                </h2>
+                                
+                                <!-- Tech Stack -->
+                                <!-- CHANGED: mb-6 -> mb-4 for mobile -->
+                                <div class="flex flex-wrap gap-2 mb-4 md:mb-6">
+                                    {project.tech.map(t => (
+                                        <span class="px-2 py-1 bg-white/60 border border-black/5 rounded-md text-xs font-medium text-gray-600">
+                                            {t}
+                                        </span>
+                                    ))}
+                                </div>
+
+                                <!-- Description -->
+                                <!-- CHANGED: mb-8 -> mb-5 for mobile. Added line-clamp-3 to be safe -->
+                                <p class="font-sans text-base md:text-lg text-gray-600 leading-relaxed mb-5 md:mb-8 max-w-md xl:max-w-xl text-balance line-clamp-3 md:line-clamp-none">
+                                    {project.description}
+                                </p>
+                                
+                                <!-- Button -->
+                                <div>
+                                    <a href={project.link} target="_blank" rel="noopener noreferrer" 
+                                       class="inline-flex items-center gap-3 px-6 md:px-8 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-all hover:gap-4 shadow-lg cursor-pointer">
+                                        <span class="font-nasalization text-sm md:text-base">View Project</span>
+                                        <Icon name="mdi:arrow-right" class="size-4" />
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- IMAGE/VISUAL COLUMN -->
+                            <!-- Kept h-1/2 as requested -->
+                            <div class="w-full md:w-1/2 h-1/2 md:h-full order-1 flex items-center justify-center p-6 md:p-12 relative overflow-hidden">
+                                
+                                {project.image ? (
+                                    // CASE A: HAS IMAGE
+                                    <div class="relative w-full h-full flex items-center justify-center">
+                                        <!-- Decorative Backdrop -->
+                                        <div class="absolute inset-4 bg-black/5 rounded-2xl blur-xl transform translate-y-4"></div>
+
+                                        <img src={project.image} 
+                                             alt={project.title} 
+                                             class="relative z-10 w-auto h-auto max-w-full max-h-full object-contain rounded-lg shadow-2xl transition-transform duration-700 hover:scale-[1.02]" 
+                                        />
+                                    </div>
+                                ) : (
+                                    // CASE B: NO IMAGE (Placeholder)
+                                    <div class="w-full h-full relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-black/5 bg-white/30">
+                                        <div class="p-6 bg-white rounded-full shadow-sm mb-4">
+                                            <Icon name={project.icon} class="size-16 md:size-20 text-gray-400" />
+                                        </div>
+                                        <span class="font-nasalization text-gray-400 text-xs tracking-widest uppercase">
+                                            Image Incoming
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            );
+        })}
+
+		<!-- OUTRO / CONTACT -->
 		<section class="relative w-full">
+             <!-- Scroll Anchor -->
              <div id="contact" class="absolute top-0 w-full h-dvh snap-start pointer-events-none"></div>
              
-             <div class="sticky top-0 h-dvh flex flex-col items-center justify-center bg-gray-900 text-white z-50">
-                <h2 class="font-nasalization text-6xl mb-8">Contact</h2>
-                <p class="font-sans text-xl opacity-70 mb-8">kornel.labun@gmail.com</p>
-                <div class="flex gap-6">
-                    <Icon name="mdi:github" class="size-10 hover:text-blue-400 cursor-pointer transition-colors" />
-                    <Icon name="mdi:linkedin" class="size-10 hover:text-blue-400 cursor-pointer transition-colors" />
+             <!-- Sticky Container -->
+             <div class="sticky top-0 h-dvh flex flex-col items-center justify-center bg-stone-950 text-white z-50 overflow-hidden">
+                
+                <!-- Decorative Background Element -->
+                <div class="absolute inset-0 opacity-10 pointer-events-none" 
+                     style="background-image: radial-gradient(circle at center, #333 1px, transparent 1px); background-size: 40px 40px;">
                 </div>
+
+                <div class="container mx-auto px-6 relative z-10 text-center">
+                    
+                    <!-- The Hook -->
+                    <p class="font-nasalization text-2xl md:text-4xl lg:text-8xl tracking-widest uppercase mb-6">
+                        The End
+                    </p>
+                    
+                    <h2 class="font-nasalization text-xl md:text-2xl lg:text-6xl leading-tight mb-8">
+                        ...but it doesn't <br/> have to be.
+                    </h2>
+                    
+                    <p class="font-sans text-lg md:text-xl text-stone-400 max-w-2xl mx-auto mb-12 text-balance">
+                        Feel free to contact me, if you think I can be of help!
+                    </p>
+
+                    <!-- Main Actions -->
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-16">
+                        <a href="mailto:kornellabun@gmail.com" 
+                           class="group relative px-8 py-4 bg-white text-black rounded-full text-lg font-bold hover:scale-105 transition-transform duration-300">
+                            <span class="font-nasalization relative z-10">Send an Email</span>
+                        </a>
+                        
+                        <a href="https://www.linkedin.com/in/kornel-labun-7aa298317" target="_blank"
+                           class="px-8 py-4 border border-stone-700 rounded-full text-lg text-stone-300 hover:border-white hover:text-white transition-colors duration-300">
+                             Let's Connect on LinkedIn
+                        </a>
+                    </div>
+
+                    <!-- Social Grid -->
+                    <div class="flex justify-center gap-8 mb-16">
+                        {socialLinks.map(link => (
+                            <a href={link.href} target="_blank" rel="noopener noreferrer" 
+                               class="text-stone-500 hover:text-rose-500 hover:scale-110 transition-all duration-300"
+                               title={link.label}>
+                                <Icon name={link.icon} class="size-10 md:size-12" />
+                            </a>
+                        ))}
+                    </div>
+                </div>
+
+                <!-- Footer / Copyright -->
+                <div class="absolute bottom-6 w-full text-center">
+                    <p class="font-sans text-stone-600 text-sm">
+                        &copy; {new Date().getFullYear()} Kornel Labun.
+                    </p>
+                </div>
+
+                <!-- Back to Top Button (Absolute Right) -->
+                <a href="#top" class="absolute bottom-10 right-6 md:right-12 p-4 md:p-6 bg-stone-900 rounded-full border border-stone-800 hover:border-rose-500 hover:text-rose-500 transition-colors group cursor-pointer">
+                    <div class="flex flex-col items-center gap-2">
+                        <Icon name="mdi:arrow-up" class="size-6 md:size-8 animate-bounce" />
+                        <span class="text-[10px] uppercase font-bold tracking-widest hidden md:block group-hover:text-white">Top</span>
+                    </div>
+                </a>
+
              </div>
 		</section>
 
@@ -148,31 +527,47 @@ const projects = [
 </html>
 
 <script>
+    // MENU LOGIC
     const menuBtn = document.getElementById('menu-toggle');
     const navOverlay = document.getElementById('nav-overlay');
     const navItems = document.querySelectorAll('.nav-item');
     let isOpen = false;
 
-    menuBtn?.addEventListener('click', () => {
-        isOpen = !isOpen;
-        toggleMenu();
-    });
-
-    navItems.forEach(item => {
-        item.addEventListener('click', () => {
-            isOpen = false;
-            toggleMenu();
-        });
-    });
-
+    // Toggle function
     function toggleMenu() {
         if (!navOverlay) return;
-        if(isOpen) {
-            navOverlay.classList.remove('translate-x-full');
+        if(isOpen) { 
+            navOverlay.classList.remove('translate-x-full'); 
             document.body.style.overflow = 'hidden'; 
-        } else {
-            navOverlay.classList.add('translate-x-full');
+        } else { 
+            navOverlay.classList.add('translate-x-full'); 
             document.body.style.overflow = ''; 
         }
     }
+
+    menuBtn?.addEventListener('click', () => { 
+        isOpen = !isOpen; 
+        toggleMenu(); 
+    });
+
+    navItems.forEach(item => {
+        item.addEventListener('click', () => { 
+            isOpen = false; 
+            toggleMenu(); 
+        });
+    });
+
+    // CARD ENTRANCE ANIMATION
+    const stickyCards = document.querySelectorAll('.sticky');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+            } else {
+                entry.target.classList.remove('in-view');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    stickyCards.forEach(card => observer.observe(card));
 </script>
