@@ -173,6 +173,81 @@ const projects = [
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Kornel Labun</title>
+
+        <!-- START JSON-LD SCHEMA -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Person",
+              "@id": "https://kornellabun.com",
+              "name": "Kornel Labun",
+              "givenName": "Kornel",
+              "familyName": "Labun",
+              "jobTitle": "Computational Biologist & Researcher",
+              "nationality": "Polish",
+              "email": "kornellabun@gmail.com",
+              "url": "https://kornellabun.com",
+              "image": "https://kornellabun.com/images/photo.jpg", 
+              "description": "Computational biologist and bioinformatician expert in multi-omics analysis, CRISPR engineering, and high-performance open-source tools.",
+              "knowsAbout": [
+                "Computational Biology",
+                "Bioinformatics",
+                "Genomics",
+                "CRISPR",
+                "Genome Engineering",
+                "Translatomics",
+                "Machine Learning",
+                "R Language",
+                "Python",
+                "Julia",
+                "NGS",
+                "Software Development"
+              ],
+              "sameAs": [
+                "https://github.com/JokingHero",
+                "https://linkedin.com/in/kornel-labun-7aa298317",
+                "https://scholar.google.no/citations?user=wsiLNg0AAAAJ"
+              ],
+              "worksFor": {
+                "@type": "Organization",
+                "name": "University of Bergen",
+                "url": "https://www.uib.no/"
+              },
+              "alumniOf": [
+                { "@type": "CollegeOrUniversity", "name": "University of Bergen" },
+                { "@type": "CollegeOrUniversity", "name": "Silesian University of Technology" }
+              ]
+            },
+            {
+              "@type": "SoftwareSourceCode",
+              "name": "CHOPCHOP",
+              "description": "One of the most widely used web tools for CRISPR genome engineering.",
+              "programmingLanguage": "Python",
+              "author": { "@id": "https://your-website.com/#kornel" },
+              "url": "https://chopchop.cbu.uib.no/"
+            },
+            {
+              "@type": "SoftwareSourceCode",
+              "name": "ORFik",
+              "description": "A comprehensive R toolkit for the analysis of translation (Ribo-Seq, RNA-Seq).",
+              "programmingLanguage": "R",
+              "author": { "@id": "https://your-website.com/#kornel" },
+              "url": "https://bioconductor.org/packages/release/bioc/html/ORFik.html"
+            },
+            {
+              "@type": "SoftwareSourceCode",
+              "name": "ampliCan",
+              "description": "Automated analysis of CRISPR experiments using NGS data.",
+              "programmingLanguage": "R",
+              "author": { "@id": "https://your-website.com/#kornel" },
+              "url": "https://bioconductor.org/packages/release/bioc/html/amplican.html"
+            }
+          ]
+        }
+        </script>
+        <!-- END JSON-LD SCHEMA -->
 	</head>
 	
 	<body class="bg-white h-dvh w-full overflow-y-scroll snap-y snap-mandatory scroll-smooth relative">
