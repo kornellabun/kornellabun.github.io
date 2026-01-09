@@ -1,6 +1,17 @@
 ---
 import '../styles/global.css';
 import { Icon } from 'astro-icon/components';
+import { Image } from 'astro:assets';
+
+// 1. Import Static Hero Images
+// These are imported directly because they are static on the page
+import photoRound from '../assets/photo_round.jpg';
+import photoMain from '../assets/photo.jpg';
+
+// 2. Import Portfolio Images Dynamically
+// This creates a map of all images in the portfolio folder.
+// Astro will process every image found here.
+const portfolioImages = import.meta.glob<{ default: ImageMetadata }>('/src/assets/portfolio/*.{jpeg,jpg,png,gif,webp}');
 
 const socialLinks = [
     { label: "GitHub", href: "https://github.com/JokingHero", icon: "mdi:github", color: "hover:text-gray-900" },
@@ -9,7 +20,6 @@ const socialLinks = [
     { label: "Email", href: "mailto:kornellabun@gmail.com", icon: "mdi:email-outline", color: "hover:text-red-500" },
 ];
 
-// DATA: SKILLS (Updated with *asterisks* for manual bolding)
 const skillCards = [
   {
     id: "bioinfo",
@@ -52,6 +62,8 @@ const skillCards = [
   }
 ];
 
+// 3. Updated Project Data
+// The 'image' property now points to the exact path in /src/assets/
 const projects = [
   { 
     title: "crisprtools.org", 
@@ -61,7 +73,7 @@ const projects = [
     icon: "mdi:dna", 
     tech: ["Angular", "Nest.js", "PostgreSQL", "R", "Python", "ML", "Community"],
     link: "https://crisprtools.org",
-    image: "/images/portfolio/crisprtools.png"
+    image: "/src/assets/portfolio/crisprtools.png"
   },
   { 
     title: "ampliCan", 
@@ -71,7 +83,7 @@ const projects = [
     icon: "mdi:file-chart", 
     tech: ["R", "Reports", "NGS", "CRISPR", "Analysis", "Bioconductor"],
     link: "https://bioconductor.org/packages/release/bioc/html/amplican.html",
-    image: "/images/portfolio/amplican_conceptual_map.webp" 
+    image: "/src/assets/portfolio/amplican_conceptual_map.webp" 
   },
   { 
     title: "SNIPSNP", 
@@ -81,7 +93,7 @@ const projects = [
     icon: "mdi:scissors-cutting", 
     tech: ["CRISPR", "Design", "R", "Machine Learning", "Genome Engineering"],
     link: "https://crisprtools.org/snipsnp",
-    image: "/images/portfolio/snipsnp.png"
+    image: "/src/assets/portfolio/snipsnp.png"
   },
   { 
     title: "ORFik", 
@@ -91,7 +103,7 @@ const projects = [
     icon: "mdi:chart-bar", 
     tech: ["NGS", "Translation", "Analysis", "R", "C++", "Bioconductor"],
     link: "https://bioconductor.org/packages/release/bioc/html/ORFik.html",
-    image: "/images/portfolio/orfik.webp"
+    image: "/src/assets/portfolio/orfik.webp"
   },
   { 
     title: "Dual-Cas13a", 
@@ -101,12 +113,12 @@ const projects = [
     icon: "mdi:microscope", 
     tech: ["RNA", "CRISPR", "R", "PRIMER design"],
     link: "https://crisprtools.org/dual-cas13a",
-    image: "/images/portfolio/dual_cas13a.png" 
+    image: "/src/assets/portfolio/dual_cas13a.png" 
   },
   { 
     title: "Code Blast Radius", 
     category: "Software", 
-    description: "LLM context managment for large codebases.",
+    description: "LLM context management for large codebases.",
     color: "bg-gray-100", 
     icon: "mdi:radius-outline", 
     tech: ["Rust", "LLM", "Static Code Analysis"],
@@ -121,7 +133,7 @@ const projects = [
     icon: "mdi:flash", 
     tech: ["Julia", "Algorithms", "Aligner", "HPC"],
     link: "https://github.com/JokingHero/CHOPOFF.jl",
-    image: "/images/portfolio/chopoff.png"
+    image: "/src/assets/portfolio/chopoff.png"
   },
   { 
     title: "CHOPCHOP", 
@@ -131,7 +143,7 @@ const projects = [
     icon: "mdi:web", 
     tech: ["Python", "Web", "Genomics"],
     link: "https://chopchop.cbu.uib.no/",
-    image: "/images/portfolio/chopchop.png"
+    image: "/src/assets/portfolio/chopchop.png"
   },
   { 
     title: "League of Draft", 
@@ -141,7 +153,7 @@ const projects = [
     icon: "mdi:controller", 
     tech: ["Node.js", "Angular", "Game Theory"],
     link: "https://github.com/JokingHero/LeagueOfDraft",
-    image: "/images/portfolio/leagueofdraft.webp"
+    image: "/src/assets/portfolio/leagueofdraft.webp"
   },
   { 
     title: "HxH RPG", 
@@ -151,7 +163,7 @@ const projects = [
     icon: "mdi:dice-d20", 
     tech: ["Game Design", "Writing"],
     link: "https://docs.google.com/document/d/1X_VY0rb-0OXtYjLkx7LSjC9ZW23KBMIbB87rt_WJOYc/edit?usp=sharing",
-    image: "/images/portfolio/hxh.jpg"
+    image: "/src/assets/portfolio/hxh.jpg"
   },
   { 
     title: "R Crash Course", 
@@ -161,7 +173,7 @@ const projects = [
     icon: "mdi:school", 
     tech: ["R", "Teaching", "Jekyll", "tidyverse"],
     link: "https://r-crash-course.github.io/",
-    image: "/images/portfolio/R_crash_course.png" 
+    image: "/src/assets/portfolio/R_crash_course.png" 
   }
 ];
 ---
@@ -309,14 +321,20 @@ const projects = [
                                 Kornel <br/> Labun
                             </h1>
                             
-                            <!-- Mobile Photo -->
+                            <!-- Mobile Photo OPTIMIZED -->
                             <div class="md:hidden block w-20 h-20 shrink-0 rounded-full overflow-hidden border-2 border-gray-100 shadow-sm ml-2">
-                                <img src="/images/photo_round.jpg" alt="Kornel Labun" class="w-full h-full object-cover" />
+                                <Image 
+                                    src={photoRound} 
+                                    alt="Kornel Labun" 
+                                    width={160}
+                                    densities={[1.5, 2]} 
+                                    loading="eager"
+                                    class="w-full h-full object-cover" 
+                                />
                             </div>
                         </div>
 
                         <!-- LinkedIn Title -->
-                        <!-- UPDATED: xl:text-2xl 2xl:text-3xl -->
                         <p class="mt-4 font-sans text-lg md:text-2xl xl:text-2xl 2xl:text-3xl text-gray-500 font-light tracking-wide text-balance">
                             Bioinformatics <span class="text-rose-300 text-sm align-middle mx-1">|</span> Genome Engineering <span class="text-rose-300 text-sm align-middle mx-1">|</span> Data & Analytics
                         </p>
@@ -324,14 +342,12 @@ const projects = [
 
                     <!-- Updated Stats / Badges -->
                     <div class="flex flex-wrap justify-center md:justify-start gap-3 hero-animate hero-animate-delay-2">
-                        <!-- UPDATED: xl:text-base 2xl:text-lg 2xl:px-6 2xl:py-2 -->
                         <span class="badge-gray px-4 py-1.5 2xl:px-6 2xl:py-2 rounded-full text-sm xl:text-base 2xl:text-lg font-bold tracking-wide">PhD</span>
                         <span class="badge-red px-4 py-1.5 2xl:px-6 2xl:py-2 rounded-full text-sm xl:text-base 2xl:text-lg font-medium">3722+ Citations</span>
                         <span class="badge-yellow px-4 py-1.5 2xl:px-6 2xl:py-2 rounded-full text-sm xl:text-base 2xl:text-lg font-medium">10+ Years Exp</span>
                     </div>
 
                     <!-- Professional Summary -->
-                    <!-- UPDATED: xl:text-xl 2xl:text-2xl max-w-xl -> xl:max-w-2xl 2xl:max-w-3xl -->
                     <p class="hero-animate hero-animate-delay-2 font-sans text-base md:text-lg xl:text-xl 2xl:text-2xl text-gray-600 leading-relaxed max-w-xl xl:max-w-2xl 2xl:max-w-3xl mx-auto md:mx-0">
                         Bridging the gap between complex genomics and scalable software. 
                         Expert in <span class="font-semibold text-gray-900">multi-omics analysis</span>, 
@@ -343,7 +359,7 @@ const projects = [
                     <!-- Actions -->
                     <div class="hero-animate hero-animate-delay-3 flex flex-col sm:flex-row items-center gap-4 pt-2 justify-center md:justify-start">
                         
-                        <!-- Resume Button: UPDATED padding and text for XL -->
+                        <!-- Resume Button -->
                         <a href="/Kornel_Labun_Bioinformatics_CV.pdf" download class="group flex items-center gap-3 bg-gray-900 text-white px-6 py-3 xl:px-8 xl:py-4 rounded-lg hover:bg-gray-800 transition-all hover:gap-4 shadow-lg shadow-gray-200 cursor-pointer">
                             <span class="font-nasalization text-sm md:text-base xl:text-lg">Download Resume</span>
                             <Icon name="mdi:download" class="size-5 xl:size-6" />
@@ -369,9 +385,16 @@ const projects = [
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN: Desktop Image -->
+            <!-- RIGHT COLUMN: Desktop Image OPTIMIZED -->
             <div class="hidden md:block w-5/12 h-full relative order-2 bg-gray-50">
-                <img src="/images/photo.jpg" alt="Kornel Labun Portrait" class="absolute inset-0 w-full h-full object-cover object-center hero-animate grayscale-[20%] hover:grayscale-0 transition-all duration-700" />
+                <Image 
+                    src={photoMain} 
+                    alt="Kornel Labun Portrait"
+                    widths={[720, 1080, 1600]}
+                    sizes="(max-width: 768px) 0vw, 42vw"
+                    class="absolute inset-0 w-full h-full object-cover object-center hero-animate grayscale-[20%] hover:grayscale-0 transition-all duration-700" 
+                    loading="eager"
+                />
                 <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-20"></div>
             </div>
 
@@ -391,23 +414,19 @@ const projects = [
                         <!-- UPDATED: Margins for large screens -->
                         <div class="mb-4 md:mb-14 2xl:mb-20 z-10 stagger-enter" style="transition-delay: 100ms">
                             <div class="flex items-center gap-4 mb-2">
-                                <!-- UPDATED: xl:text-7xl -->
                                 <span class="font-nasalization text-4xl md:text-6xl xl:text-7xl text-gray-900">{card.title}</span>
                             </div>
-                            <!-- UPDATED: xl:text-2xl -->
                             <p class="font-sans text-lg md:text-xl xl:text-2xl text-gray-500 uppercase tracking-widest">{card.subtitle}</p>
                         </div>
 
                         <div class="flex flex-col gap-3 md:gap-5 2xl:gap-8 z-10">
                             {card.items.map((item, idx) => (
                                 <div class="stagger-enter group" style={`transition-delay: ${200 + (idx * 100)}ms`}>
-                                    <!-- UPDATED: xl:text-2xl -->
                                     <h4 class="font-nasalization text-lg md:text-xl xl:text-2xl text-gray-400 mb-2 group-hover:text-rose-600 transition-colors">
                                         {item.key}
                                     </h4>
                                     
                                     <!-- MANUAL PARSER -->
-                                    <!-- UPDATED: xl:text-2xl leading-relaxed -->
                                     <p class="text-base md:text-xl xl:text-2xl leading-relaxed 2xl:leading-loose">
                                         {item.value.split('*').map((part, i) => {
                                             const isBold = i % 2 !== 0;
@@ -443,18 +462,15 @@ const projects = [
                                 
                                 <!-- Index & Category -->
                                 <div class="flex items-center gap-4 mb-1 md:mb-6">
-                                    <!-- UPDATED: xl:text-7xl -->
                                     <span class="font-nasalization text-5xl md:text-6xl xl:text-7xl opacity-10 font-bold">
                                         {(index + 1).toString().padStart(2, '0')}
                                     </span>
-                                    <!-- UPDATED: xl:text-base -->
                                     <span class="uppercase tracking-[0.2em] text-xs md:text-sm xl:text-base font-bold opacity-60 border-b border-black/20 pb-1">
                                         {project.category}
                                     </span>
                                 </div>
                                 
                                 <!-- Title -->
-                                <!-- UPDATED: xl:text-7xl 2xl:text-8xl -->
                                 <h2 class="font-nasalization text-3xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl leading-tight mb-2 md:mb-4 text-gray-900">
                                     {project.title}
                                 </h2>
@@ -469,14 +485,12 @@ const projects = [
                                 </div>
 
                                 <!-- Description -->
-                                <!-- UPDATED: xl:text-xl 2xl:text-2xl and xl:max-w-2xl -->
                                 <p class="font-sans text-base md:text-lg xl:text-xl 2xl:text-2xl text-gray-600 leading-relaxed mb-5 md:mb-8 max-w-md xl:max-w-2xl 2xl:max-w-3xl text-balance line-clamp-3 md:line-clamp-none">
                                     {project.description}
                                 </p>
                                 
                                 <!-- Button -->
                                 <div>
-                                    <!-- UPDATED: xl:px-10 xl:py-4 xl:text-lg -->
                                     <a href={project.link} target="_blank" rel="noopener noreferrer" 
                                        class="inline-flex items-center gap-3 px-6 md:px-8 xl:px-10 py-3 xl:py-4 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-all hover:gap-4 shadow-lg cursor-pointer">
                                         <span class="font-nasalization text-sm md:text-base xl:text-lg">View Project</span>
@@ -485,14 +499,17 @@ const projects = [
                                 </div>
                             </div>
 
-                            <!-- IMAGE/VISUAL COLUMN -->
+                            <!-- IMAGE/VISUAL COLUMN OPTIMIZED -->
                             <div class="w-full md:w-1/2 h-1/2 md:h-full order-1 flex items-center justify-center p-6 md:p-12 relative overflow-hidden">
-                                {project.image ? (
+                                {project.image && portfolioImages[project.image] ? (
                                     <div class="relative w-full h-full flex items-center justify-center">
                                         <div class="absolute inset-4 bg-black/5 rounded-2xl blur-xl transform translate-y-4"></div>
-                                        <img src={project.image} 
-                                             alt={project.title} 
-                                             class="relative z-10 w-auto h-auto max-w-full max-h-full object-contain rounded-lg shadow-2xl transition-transform duration-700 hover:scale-[1.02]" 
+                                        <Image 
+                                            src={portfolioImages[project.image]()} 
+                                            alt={project.title} 
+                                            widths={[400, 800, 1200]}
+                                            sizes="(max-width: 768px) 90vw, 50vw"
+                                            class="relative z-10 w-auto h-auto max-w-full max-h-full object-contain rounded-lg shadow-2xl transition-transform duration-700 hover:scale-[1.02]" 
                                         />
                                     </div>
                                 ) : (
@@ -501,7 +518,7 @@ const projects = [
                                             <Icon name={project.icon} class="size-16 md:size-20 text-gray-400" />
                                         </div>
                                         <span class="font-nasalization text-gray-400 text-xs tracking-widest uppercase">
-                                            Image Incoming
+                                            {project.image ? "Image not found" : "Image Incoming"}
                                         </span>
                                     </div>
                                 )}
@@ -524,17 +541,14 @@ const projects = [
 
                 <div class="container mx-auto px-6 relative z-10 text-center">
                     
-                    <!-- UPDATED: 2xl:text-9xl -->
                     <p class="font-nasalization text-2xl md:text-4xl lg:text-8xl 2xl:text-9xl tracking-widest uppercase mb-6">
                         The End
                     </p>
                     
-                    <!-- UPDATED: 2xl:text-7xl -->
                     <h2 class="font-nasalization text-xl md:text-2xl lg:text-6xl 2xl:text-7xl leading-tight mb-8">
                         ...but it doesn't <br/> have to be.
                     </h2>
                     
-                    <!-- UPDATED: xl:text-2xl 2xl:text-3xl -->
                     <p class="font-sans text-lg md:text-xl xl:text-2xl 2xl:text-3xl text-stone-400 max-w-2xl xl:max-w-4xl mx-auto mb-12 text-balance">
                         Feel free to contact me, if you think I can be of help!
                     </p>
