@@ -14,10 +14,10 @@ import photoMain from '../assets/photo.jpg';
 const portfolioImages = import.meta.glob<{ default: ImageMetadata }>('/src/assets/portfolio/*.{jpeg,jpg,png,gif,webp}');
 
 const socialLinks = [
-    { label: "GitHub", href: "https://github.com/JokingHero", icon: "mdi:github", color: "hover:text-gray-900" },
-    { label: "LinkedIn", href: "https://linkedin.com/in/kornel-labun-7aa298317", icon: "mdi:linkedin", color: "hover:text-rose-700" },
-    { label: "Scholar", href: "https://scholar.google.no/citations?user=wsiLNg0AAAAJ", icon: "mdi:school", color: "hover:text-rose-500" },
-    { label: "Email", href: "mailto:kornellabun@gmail.com", icon: "mdi:email-outline", color: "hover:text-red-500" },
+    { label: "GitHub", href: "https://github.com/JokingHero", icon: "mdi:github", color: "hover:text-stone-400" },
+    { label: "LinkedIn", href: "https://linkedin.com/in/kornel-labun-7aa298317", icon: "mdi:linkedin", color: "hover:text-blue-400" },
+    { label: "Scholar", href: "https://scholar.google.no/citations?user=wsiLNg0AAAAJ", icon: "mdi:school", color: "hover:text-rose-400" },
+    { label: "Email", href: "mailto:kornellabun@gmail.com", icon: "mdi:email-outline", color: "hover:text-green-400" },
 ];
 
 const skillCards = [
@@ -26,6 +26,7 @@ const skillCards = [
     title: "Domain Expertise",
     subtitle: "Computational Biology",
     color: "bg-stone-50",
+    accent: "text-stone-500",
     icon: "mdi:dna",
     items: [
       { key: "Omics Analysis", value: "*RNA-Seq*, *Ribo-Seq* (Translatomics), *Single-Cell* & Spatial Transcriptomics concepts, *Genomics*, Proteomics concepts." },
@@ -39,6 +40,7 @@ const skillCards = [
     title: "Engineering Stack",
     subtitle: "Software, AI & Visualization",
     color: "bg-blue-50",
+    accent: "text-blue-300",
     icon: "mdi:code-braces",
     items: [
       { key: "Programming", value: "*R* (Bioconductor, tidyverse, Shiny), *Python* (Pandas, SciPy, scikit-learn, Keras, TensorFlow/PyTorch), *Julia*, *Javascript* (Node.js, React, Angular), *Bash*." },
@@ -52,6 +54,7 @@ const skillCards = [
     title: "Infrastructure",
     subtitle: "Data Engineering & DevOps",
     color: "bg-indigo-50",
+    accent: "text-indigo-300",
     icon: "mdi:server-network",
     items: [
       { key: "Databases", value: "*SQL* (PostgreSQL, MySQL), *NoSQL* (MongoDB, Redis, Neo4j)." },
@@ -411,9 +414,8 @@ const projects = [
                             <Icon name={card.icon} class="size-96 2xl:size-[32rem]" />
                         </div>
 
-                        <!-- UPDATED: Margins for large screens -->
                         <div class="mb-4 md:mb-14 2xl:mb-20 z-10 stagger-enter" style="transition-delay: 100ms">
-                            <div class="flex items-center gap-4 mb-2">
+                            <div class="flex items-center gap-4 mb-2 md:mb-5">
                                 <span class="font-nasalization text-4xl md:text-6xl xl:text-7xl text-gray-900">{card.title}</span>
                             </div>
                             <p class="font-sans text-lg md:text-xl xl:text-2xl text-gray-500 uppercase tracking-widest">{card.subtitle}</p>
@@ -422,7 +424,7 @@ const projects = [
                         <div class="flex flex-col gap-3 md:gap-5 2xl:gap-8 z-10">
                             {card.items.map((item, idx) => (
                                 <div class="stagger-enter group" style={`transition-delay: ${200 + (idx * 100)}ms`}>
-                                    <h4 class="font-nasalization text-lg md:text-xl xl:text-2xl text-gray-400 mb-2 group-hover:text-rose-600 transition-colors">
+                                    <h4 class={`font-sans font-bold uppercase text-lg md:text-xl xl:text-2xl ${card.accent} mb-2`}>
                                         {item.key}
                                     </h4>
                                     
@@ -455,7 +457,7 @@ const projects = [
                     
                     <div class={`sticky top-0 h-dvh w-full flex flex-col border-t border-black/5 overflow-hidden ${project.color} z-[${index + 20}]`}>
                         
-                        <div class={`container mx-auto h-full flex flex-col md:flex-row ${isOdd ? 'md:flex-row-reverse' : ''}`}>
+                        <div class={`container mx-auto h-full flex flex-col md:flex-row ${!isOdd ? 'md:flex-row-reverse' : ''}`}>
                             
                             <!-- CONTENT COLUMN -->
                             <div class="w-full md:w-1/2 h-1/2 md:h-full px-6 md:px-12 flex flex-col justify-center relative z-10 order-2 md:order-1">
@@ -570,7 +572,7 @@ const projects = [
                     <div class="flex justify-center gap-8 mb-16">
                         {socialLinks.map(link => (
                             <a href={link.href} target="_blank" rel="noopener noreferrer" 
-                               class="text-stone-500 hover:text-rose-500 hover:scale-110 transition-all duration-300"
+                               class="text-stone-500 hover:text-white hover:scale-110 transition-all duration-300"
                                title={link.label}>
                                 <Icon name={link.icon} class="size-10 md:size-12" />
                             </a>
